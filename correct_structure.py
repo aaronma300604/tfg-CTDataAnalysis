@@ -1,8 +1,8 @@
 import os
 import shutil
 
-ORIGEN = '/home/roth/aaron/TFG/data/NSCLC-Radiomics-Version-4-Oct-2020-NBIA-manifest/NSCLC-Radiomics'
-DESTINO = '/home/roth/aaron/TFG/data-corrected-st/DICOM'
+ORIGEN = '/home/roth/aaron/TFG/data/ManualDelineation/NSCLC-RADIOMICS-INTEROBSERVER1-Aug-31-2020-NBIA-manifest/"NSCLC-Radiomics-Interobserver1"'
+DESTINO = '/home/roth/aaron/TFG/data-corrected-st/ManualDelineation/DICOM'
 
 for paciente in os.listdir(ORIGEN):
     paciente_origen = os.path.join(ORIGEN, paciente)

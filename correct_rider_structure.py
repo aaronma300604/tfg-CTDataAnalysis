@@ -7,12 +7,9 @@ DESTINO = '/home/roth/aaron/TFG/data-corrected-st/RIDER/DICOM'
 
 for paciente in os.listdir(ORIGEN_CT):
     paciente_origen = os.path.join(ORIGEN_CT, paciente)
-    paciente_destino = os.path.join(DESTINO, paciente, 'CT')
 
     if not os.path.isdir(paciente_origen):
         continue
-
-    os.makedirs(paciente_destino, exist_ok=True)
 
     test_bool = True
     switcher = {True: 'TEST', False: 'RETEST'}
@@ -27,23 +24,22 @@ for paciente in os.listdir(ORIGEN_CT):
 
         if len(os.listdir(estudio_path)) == 1:
             folder = os.listdir(estudio_path)[0]
-            shutil.copytree(os.path.join(estudio_path, folder), os.path.join(paciente_destino, switcher[test_bool]))
+            paciente_destino = os.path.join(DESTINO, switcher[test_bool], paciente, 'CT')
+            shutil.copytree(os.path.join(estudio_path, folder), paciente_destino)
             test_bool = not test_bool
         elif len(os.listdir(estudio_path)) == 2:
             folder = os.listdir(estudio_path)[0]
-            shutil.copytree(os.path.join(estudio_path, folder), os.path.join(paciente_destino, 'TEST'))
+            paciente_destino = os.path.join(DESTINO, 'TEST', paciente, 'CT')
+            shutil.copytree(os.path.join(estudio_path, folder), paciente_destino)
             folder = os.listdir(estudio_path)[1]
-            shutil.copytree(os.path.join(estudio_path, folder), os.path.join(paciente_destino, 'RETEST'))
+            paciente_destino = os.path.join(DESTINO, 'RETEST', paciente, 'CT')
+            shutil.copytree(os.path.join(estudio_path, folder), paciente_destino)
 
 for paciente in os.listdir(ORIGEN_SEG):
     paciente_origen = os.path.join(ORIGEN_SEG, paciente)
-    paciente_destino = os.path.join(DESTINO,paciente, 'SEG')
-    paciente_destino_alt = os.path.join(DESTINO, paciente, 'SEG_alt')
 
     if not os.path.isdir(paciente_origen):
         continue
-
-    os.makedirs(paciente_destino, exist_ok=True)
 
     for estudio in os.listdir(paciente_origen):
         estudio_path = os.path.join(paciente_origen, estudio)
@@ -58,13 +54,17 @@ for paciente in os.listdir(ORIGEN_SEG):
                 continue
             if "RIDER" in carpeta:
                 if "RETEST" in carpeta:
-                    shutil.copytree(carpeta_path, os.path.join(paciente_destino_alt, 'RETEST'))
+                    paciente_destino_alt = os.path.join(DESTINO, 'RETEST', paciente, 'SEG_alt')
+                    shutil.copytree(carpeta_path, paciente_destino_alt)
                 elif "TEST" in carpeta:
-                    shutil.copytree(carpeta_path, os.path.join(paciente_destino_alt, 'TEST'))
+                    paciente_destino_alt = os.path.join(DESTINO, 'TEST', paciente, 'SEG_alt')
+                    shutil.copytree(carpeta_path, paciente_destino_alt)
  
             else:
                 if "RETEST" in carpeta:
-                    shutil.copytree(carpeta_path, os.path.join(paciente_destino, 'RETEST'))
+                    paciente_destino = os.path.join(DESTINO, 'RETEST', paciente, 'SEG')
+                    shutil.copytree(carpeta_path, paciente_destino)
                 elif "TEST" in carpeta:
-                    shutil.copytree(carpeta_path, os.path.join(paciente_destino, 'TEST'))
+                    paciente_destino = os.path.join(DESTINO, 'TEST', paciente, 'SEG')
+                    shutil.copytree(carpeta_path, paciente_destino)
 
